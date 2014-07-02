@@ -22426,7 +22426,7 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <part name="C9" library="resistor" deviceset="C-EU" device="C0805" value="100n"/>
 <part name="R7" library="resistor" deviceset="R-EU_" device="R1206" value="47K"/>
 <part name="R8" library="resistor" deviceset="R-EU_" device="R1206" value="10K"/>
-<part name="C10" library="resistor" deviceset="C-EU" device="C1206"/>
+<part name="C10" library="resistor" deviceset="C-EU" device="C1206" value="100n"/>
 <part name="T1" library="transistor" deviceset="*-PNP-" device="TO220" value="BD244C"/>
 <part name="D3" library="diode" deviceset="DIODE-" device="SOD80C" value="1N4148"/>
 <part name="C11" library="resistor" deviceset="C-EU" device="C1206" value="1n"/>
