@@ -13,10 +13,17 @@
 
 //----- Begin Code ------------------------------------------------------------
 
-// (8,23 V + 0,095V) /57*10/2,56*1024
-#define TARGET_VOLTAGE 584
+// (8,26 V + 0,095V) /57*10/2,56*1024 + 4
+#define TARGET_VOLTAGE_2S 590
+//#define TARGET_VOLTAGE_2S 586
 
-#define PWM_TOP 255
+// (12,39 V + 0,095V) /57*10/2,56*1024 + 9
+#define TARGET_VOLTAGE_3S 886
+
+// (8,8 V + 0,095V) /57*10/2,56*1024
+#define TRESHOLD_VOLTAGE 624
+
+#define PWM_TOP 100
 
 #define LED PB4
 #define PWM PB1
@@ -31,8 +38,8 @@ void WDT_Init(void) {
 	wdt_reset();
 	//set up WDT interrupt
 	WDTCR = (1<<WDCE)|(1<<WDE);
-	//Start watchdog timer with 0,25s prescaller
-	WDTCR = (1<<WDIE)|(1<<WDE)|(1<<WDP2);
+	//Start watchdog timer with 128 ms prescaller
+	WDTCR = (1<<WDIE)|(1<<WDE)|(1<<WDP1)|(1<<WDP0);
 	//Enable global interrupts
 	sei();
 }
@@ -76,17 +83,24 @@ int main(void) {
 	PORTB |= (1<<PB2);
 	while(1) {
 		measure_voltage();
-		if (voltage >= TARGET_VOLTAGE) {
+		uint16_t target = 0;
+		if (voltage < TRESHOLD_VOLTAGE) { // 2S baterka
+			target = TARGET_VOLTAGE_2S;
+		} else {
+			target = TARGET_VOLTAGE_3S;
+		}
+		
+		if (voltage >= target - 2) {
 			PORTB |= (1<<LED);
 		} else {
 			PORTB &= ~(1<<LED);
 		}
-		if (voltage < TARGET_VOLTAGE) {
+		if (voltage < target) {
 			if (OCR0B > 0) {
 				OCR0B--;
 			}
 		}
-		if (voltage > TARGET_VOLTAGE) {
+		if (voltage > target) {
 			if (OCR0B < PWM_TOP) {
 				OCR0B++;
 			}
