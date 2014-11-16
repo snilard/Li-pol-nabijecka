@@ -23,12 +23,17 @@
 // (8,8 V + 0,095V) /57*10/2,56*1024
 #define TRESHOLD_VOLTAGE 624
 
-#define PWM_TOP 100
+// povolený vršek PWM
+#define PWM_TOP 70
+// Pokud PWM překročí mez, ukáže se, že je baterka nabitá
+#define PWM_TRESHOLD 48
 
 #define LED PB4
 #define PWM PB1
 
 uint16_t voltage = 0;
+uint16_t counter = 0;
+
 
 //initialize watchdog
 void WDT_Init(void) {
@@ -90,10 +95,19 @@ int main(void) {
 			target = TARGET_VOLTAGE_3S;
 		}
 		
-		if (voltage >= target - 2) {
+		counter++;
+		if (counter > 20) {
+			counter = 0;
+		}
+		
+		if (OCR0B >= PWM_TRESHOLD) {
 			PORTB |= (1<<LED);
 		} else {
-			PORTB &= ~(1<<LED);
+			if (counter < 3) {
+				PORTB |= (1<<LED);
+			} else {
+				PORTB &= ~(1<<LED);
+			}
 		}
 		if (voltage < target) {
 			if (OCR0B > 0) {
