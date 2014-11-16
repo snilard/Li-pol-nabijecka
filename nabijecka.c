@@ -68,8 +68,8 @@ void measure_voltage(void) {
 
 void timer_enable(void) {
 	power_timer0_enable();
-    TCCR0A =  (1<<COM0B1) | (1<<WGM00) | (1<<WGM01);
-    TCCR0B = (1<<CS00);
+	TCCR0A = (1<<COM0B1) | (1<<WGM00) | (1<<WGM01);
+	TCCR0B = (1<<CS00);
 	OCR0B = 0;
 }
 
