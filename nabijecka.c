@@ -13,12 +13,11 @@
 
 //----- Begin Code ------------------------------------------------------------
 
-// (8,26 V + 0,095V) /57*10/2,56*1024 + 4
-#define TARGET_VOLTAGE_2S 590
-//#define TARGET_VOLTAGE_2S 586
+// (8,34 V + 0,095V) /57*10/2,56*1024 + 3
+#define TARGET_VOLTAGE_2S 595
 
-// (12,39 V + 0,095V) /57*10/2,56*1024 + 9
-#define TARGET_VOLTAGE_3S 886
+// (12,51 V + 0,095V) /57*10/2,56*1024 + 9
+#define TARGET_VOLTAGE_3S 893
 
 // (8,8 V + 0,095V) /57*10/2,56*1024
 #define TRESHOLD_VOLTAGE 624
